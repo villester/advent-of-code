@@ -197,8 +197,6 @@ for(i=0; i<test.length-1; i++){
 
 
 //part 2
-
-
 count=0;
 symbolfound = 0;
 testarray = [];
@@ -234,7 +232,7 @@ for(i=0; i<test.length-1; i++){
 				//left edge
 				if(firstmemory == 0){
 					for(k=firstmemory; k<=lastmemory+1; k++){
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(test[i+1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
 							break;
@@ -249,7 +247,7 @@ for(i=0; i<test.length-1; i++){
 				//right edge
 				}else if(lastmemory == test[i].length-1){
 					for(k=firstmemory-1; k<=lastmemory; k++){
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(ttest[i+1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
 							break;
@@ -266,7 +264,7 @@ for(i=0; i<test.length-1; i++){
 
 					for(k=firstmemory-1; k<=lastmemory+1; k++){
 
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(test[i+1][k] == '*'){
 
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
@@ -291,7 +289,7 @@ for(i=0; i<test.length-1; i++){
 				if(firstmemory == 0){
 
 					for(k=firstmemory; k<=lastmemory+1; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
@@ -307,7 +305,7 @@ for(i=0; i<test.length-1; i++){
 				}else if(lastmemory == test[i].length-1){
 
 					for(k=firstmemory-1; k<=lastmemory; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
@@ -323,7 +321,7 @@ for(i=0; i<test.length-1; i++){
 				}else{
 
 					for(k=firstmemory-1; k<=lastmemory+1; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
@@ -344,12 +342,12 @@ for(i=0; i<test.length-1; i++){
 				//left edge
 				if(firstmemory == 0){
 					for(k=firstmemory; k<=lastmemory+1; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
 						}
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(test[i+1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
 							break;
@@ -364,12 +362,12 @@ for(i=0; i<test.length-1; i++){
 				//right edge
 				}else if(lastmemory == test[i].length-1){
 					for(k=firstmemory-1; k<=lastmemory; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
 						}
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(test[i+1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
 							break;
@@ -384,12 +382,12 @@ for(i=0; i<test.length-1; i++){
 				//everything in the middle
 				}else{
 					for(k=firstmemory-1; k<=lastmemory+1; k++){
-						if(isNaN(parseInt(test[i-1][k]))==true && test[i-1][k] == '*'){
+						if(test[i-1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i-1)+"-"+String(k);
 							break;
 						}
-						if(isNaN(parseInt(test[i+1][k]))==true && test[i+1][k] == '*'){
+						if(test[i+1][k] == '*'){
 							symbolfound = 1;
 							symbolpos = String(i+1)+"-"+String(k);
 							break;
@@ -419,15 +417,17 @@ for(i=0; i<test.length-1; i++){
 				testarray[symbolpos] = numbertoadd;
 				
 			}else{
-				testarray[symbolpos] = numbertoadd +" * "+ testarray[symbolpos];
+
 				symbolarray.push(symbolpos);
-				multvalue = parseInt(numbertoadd)*parseInt(testarray[symbolpos]);
+				multvalue = parseInt(numbertoadd) * parseInt(testarray[symbolpos]);
+				testarray[symbolpos] = numbertoadd +" * "+ testarray[symbolpos] +" = "+ String(multvalue);
 				count = count + multvalue;
 			}
 			
 
-// 			count = count + parseInt(numbertoadd);
+
 		}
 	}
-// break;
+
+
 }
