@@ -18,6 +18,7 @@ for(i=0; i<rawdataarray.length-1; i++){
     if(found == 0){
         parseddataarray.splice(i+count, 0, rawdataarray[i].split(''))
         count++
+        
     } 
 }
 
@@ -48,51 +49,12 @@ for(i=0; i<parseddataarray.length; i++){
         }
     }
 }
-
-
-function findDistance(arraydata, start, end, position = []){
-    if(position.length == 0){
-        position.push(arraydata[start]['row'])
-        position.push(arraydata[start]['col'])
-    }
-    indiagonal = 0;
-    moved = 0;
-    
-    if(position[0] < arraydata[end]['row'] && position[1] < arraydata[end]['col']){
-        //++
-        moved = findDistance(arraydata, start, end, [position[0] + 1, position[1] + 1])
-        indiagonal = 1;
-    }else if(position[0] > arraydata[end]['row'] && position[1] > arraydata[end]['col']){
-        //--
-        moved = findDistance(arraydata, start, end, [position[0] - 1, position[1] - 1])
-        indiagonal = 1;
-    }else if(position[0] < arraydata[end]['row'] && position[1] > arraydata[end]['col']){
-        //-+
-        moved = findDistance(arraydata, start, end, [position[0] + 1, position[1] - 1])
-        indiagonal = 1;
-    }else if(position[0] > arraydata[end]['row'] && position[1] < arraydata[end]['col']){
-        //+-
-        moved = findDistance(arraydata, start, end, [position[0] - 1, position[1] + 1])
-        indiagonal = 1;
-    }else if(position[0] == arraydata[end]['row'] && position[1] < arraydata[end]['col']){
-        //^
-        moved = findDistance(arraydata, start, end, [position[0], position[1] + 1])
-    }else if(position[0] == arraydata[end]['row'] && position[1] > arraydata[end]['col']){
-        //v
-        moved = findDistance(arraydata, start, end, [position[0], position[1] - 1])
-    }else if(position[0] < arraydata[end]['row'] && position[1] == arraydata[end]['col']){
-        //>
-        moved = findDistance(arraydata, start, end, [position[0] + 1, position[1]])
-    }else if(position[0] > arraydata[end]['row'] && position[1] == arraydata[end]['col']){
-        //<
-        moved = findDistance(arraydata, start, end, [position[0] - 1, position[1]])
-    }else{
-        return(0)
-    }
-    if(indiagonal == 0){
-        return(moved+=1)
-    }else{
-        return(moved+=2)
+originalgalaxies = []
+for(i=0; i<rawdataarray.length-1; i++){
+    for(j=0; j<rawdataarray[i].length; j++){
+        if(rawdataarray[i][j] == '#'){
+            originalgalaxies.push({'row': i, 'col': j})
+        }
     }
 }
 
@@ -102,10 +64,60 @@ for(i=0; i<galaxies.length-1; i++){
     condition = 1
     while (condition != 0) {
         amountofgalaxies++;
+        
         if(amountofgalaxies === galaxies.length){
             condition = 0
         }else{
-            count += findDistance(galaxies, i, amountofgalaxies)
+            count += findShortPath(galaxies, i, amountofgalaxies)
+
+        }
+    }
+}
+
+function findShortPath(arraydata, start, end){
+    rowdifference = Math.abs(arraydata[start]['row'] - arraydata[end]['row'])
+    coldifference = Math.abs(arraydata[start]['col'] - arraydata[end]['col'])
+    low = 0;
+    high = 0;
+    if(coldifference < rowdifference){
+        low = coldifference;
+        high = rowdifference; 
+    }else{
+        low = rowdifference;
+        high = coldifference;
+    }
+    value1 = low*2
+    value2 = Math.abs(high-low)
+    addedvalue = value1 + value2
+    return(addedvalue)
+}
+
+//part 2
+movedgalaxies = []
+count = 0
+for(i=0; i<galaxies.length-1; i++){
+    value1 = galaxies[i]['row'] - originalgalaxies[i]['row']
+    multipvalue1 = value1 * 999999
+    finalvalue1 = multipvalue1 + galaxies[i]['row']
+
+    value2 = galaxies[i]['col'] - originalgalaxies[i]['col']
+    multipvalue2 = value2 * 999999
+    finalvalue2 = multipvalue2 + galaxies[i]['col']
+    
+    movedgalaxies.push({'row': finalvalue1, 'col': finalvalue2})
+}
+
+count = 0
+for(i=0; i<movedgalaxies.length-1; i++){
+    amountofgalaxies = i
+    condition = 1
+    while (condition != 0) {
+        amountofgalaxies++;
+        
+        if(amountofgalaxies === movedgalaxies.length){
+            condition = 0
+        }else{
+            count += findShortPath(movedgalaxies, i, amountofgalaxies)
         }
     }
 }
