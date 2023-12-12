@@ -95,14 +95,14 @@ function findShortPath(arraydata, start, end){
 //part 2
 movedgalaxies = []
 count = 0
-for(i=0; i<galaxies.length-1; i++){
+for(i=0; i<galaxies.length; i++){
     value1 = galaxies[i]['row'] - originalgalaxies[i]['row']
     multipvalue1 = value1 * 999999
-    finalvalue1 = multipvalue1 + galaxies[i]['row']
+    finalvalue1 = multipvalue1 + originalgalaxies[i]['row']
 
     value2 = galaxies[i]['col'] - originalgalaxies[i]['col']
     multipvalue2 = value2 * 999999
-    finalvalue2 = multipvalue2 + galaxies[i]['col']
+    finalvalue2 = multipvalue2 + originalgalaxies[i]['col']
     
     movedgalaxies.push({'row': finalvalue1, 'col': finalvalue2})
 }
