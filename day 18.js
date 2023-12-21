@@ -197,3 +197,21 @@ for(i=0; i<pathmatrix.length; i++){
     thestring += pathmatrix[i].join('')+'\n'
 }
 document.getElementById('visual').innerHTML = thestring
+
+
+//part 2 translation
+for(i=0; i<parseddataarray.length; i++){
+    //spaces to move
+    parseddataarray[i]['amount'] = Number(parseddataarray[i]['color'].split('').reverse().splice(1).reverse().join('').replace('#', '0x'))
+    //direction
+    direction = parseddataarray[i]['color'].split('').splice(parseddataarray[i]['color'].length-1).join('')
+    if(direction == '0'){
+        parseddataarray[i]['direction'] = 'R'
+    }else if(direction == '1'){
+        parseddataarray[i]['direction'] = 'D'
+    }else if(direction == '2'){
+        parseddataarray[i]['direction'] = 'L'
+    }else if(direction == '3'){
+        parseddataarray[i]['direction'] = 'U'
+    }
+}
